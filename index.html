@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ecuador: economía, sociedad y cultura a través del tiempo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080d18;
+    --ink:#eaf0fa;
+    --muted:#9fb2cc;
+    --line:rgba(255,255,255,.10);
+    --card:rgba(255,255,255,.045);
+    --cacao:#c98b4b;
+    --banano:#e6c53a;
+    --petroleo:#3a8fb0;
+    --crisis80:#b0533f;
+    --crisis99:#e2543f;
+    --dolar:#2fae74;
+    --digital:#6b8cf0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Fondo animado ---------- */
+  .orbs{position:fixed;inset:0;z-index:-2;overflow:hidden}
+  .orbs span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:float 22s ease-in-out infinite}
+  .orbs span:nth-child(1){width:520px;height:520px;background:var(--cacao);top:-140px;left:-120px}
+  .orbs span:nth-child(2){width:460px;height:460px;background:var(--petroleo);top:38%;right:-160px;animation-delay:-7s}
+  .orbs span:nth-child(3){width:420px;height:420px;background:var(--dolar);bottom:-160px;left:22%;animation-delay:-13s}
+  .orbs span:nth-child(4){width:380px;height:380px;background:var(--digital);top:66%;left:-140px;animation-delay:-4s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-50px) scale(1.12)}66%{transform:translate(-50px,40px) scale(.92)}}
+  body::after{
+    content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.06), transparent 55%),
+               linear-gradient(180deg, rgba(8,13,24,.35), rgba(8,13,24,.92));
+  }
+
+  /* ---------- Barra de progreso ---------- */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;z-index:100;
+    background:linear-gradient(90deg,var(--cacao),var(--banano),var(--petroleo),var(--crisis99),var(--dolar),var(--digital));
+    box-shadow:0 0 18px rgba(107,140,240,.7);
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;padding:90px 24px 80px;position:relative;
+  }
+  .kicker{
+    font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin-bottom:24px;border:1px solid var(--line);border-radius:999px;
+    padding:9px 20px;background:rgba(255,255,255,.03);backdrop-filter:blur(6px);
+  }
+  header.hero h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:800;
+    font-size:clamp(2.1rem,5.8vw,4.6rem);line-height:1.05;letter-spacing:-.02em;
+    max-width:15ch;
+    background:linear-gradient(120deg,#fff 15%,#ffd9a8 45%,#8fc7ff 80%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin-bottom:22px;
+  }
+  header.hero p.sub{max-width:60ch;color:var(--muted);font-size:clamp(.98rem,1.8vw,1.14rem);font-weight:300}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px}
+  .hero-tags span{font-size:.76rem;padding:7px 15px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#cfdcee}
+
+  /* ---------- Mascotas: hero ---------- */
+  .mascot-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:20px 26px;margin-top:44px}
+  .mascot-chip{
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    opacity:0;transform:translateY(20px) scale(.55);
+    animation:chipIn .8s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes chipIn{to{opacity:1;transform:none}}
+  .chip-art{
+    width:76px;height:76px;border-radius:50%;padding:11px;
+    background:radial-gradient(circle at 32% 26%, rgba(255,255,255,.16), rgba(255,255,255,.02));
+    border:1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+    box-shadow:0 0 34px -12px var(--accent), inset 0 0 22px -14px var(--accent);
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s;
+  }
+  .mascot-chip:hover .chip-art{transform:scale(1.13) rotate(-4deg);box-shadow:0 0 46px -8px var(--accent)}
+  .mascot-chip span{font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .chip-art svg{animation:bob 3.6s ease-in-out infinite}
+  .mascot-chip:nth-child(2n) .chip-art svg{animation-delay:-1.2s}
+  .mascot-chip:nth-child(3n) .chip-art svg{animation-delay:-2.1s}
+
+  .scroll-hint{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    color:var(--muted);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .scroll-hint::after{content:'';width:1px;height:40px;background:linear-gradient(180deg,var(--muted),transparent);animation:pulseLine 2s ease-in-out infinite}
+  @keyframes pulseLine{0%,100%{opacity:.25;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+
+  /* ---------- Nav chips ---------- */
+  nav.chips{
+    position:sticky;top:0;z-index:60;display:flex;gap:9px;justify-content:center;flex-wrap:wrap;
+    padding:14px 18px;background:rgba(8,13,24,.72);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.chips a{
+    font-size:.74rem;font-weight:600;text-decoration:none;color:var(--muted);
+    padding:7px 14px;border-radius:999px;border:1px solid transparent;transition:.28s;white-space:nowrap;
+  }
+  nav.chips a:hover{color:#fff;border-color:var(--line);background:rgba(255,255,255,.06);transform:translateY(-1px)}
+
+  /* ---------- Línea de tiempo ---------- */
+  .timeline{position:relative;max-width:1120px;margin:0 auto;padding:90px 24px 40px}
+  .timeline::before{
+    content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);
+    background:linear-gradient(180deg,transparent 0%,var(--cacao) 6%,var(--banano) 22%,var(--petroleo) 38%,
+      var(--crisis80) 54%,var(--crisis99) 66%,var(--dolar) 80%,var(--digital) 94%,transparent 100%);
+    opacity:.55;
+  }
+  .item{
+    display:grid;grid-template-columns:1fr 92px 1fr;align-items:start;margin-bottom:64px;position:relative;
+    opacity:0;transform:translateY(34px);
+    transition:opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1);
+  }
+  .item.visible{opacity:1;transform:none}
+
+  .dot{
+    grid-column:2;justify-self:center;margin-top:6px;width:64px;height:64px;border-radius:50%;
+    display:grid;place-items:center;
+    background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.22), rgba(255,255,255,.03));
+    border:1.5px solid color-mix(in srgb, var(--accent) 65%, transparent);
+    box-shadow:0 0 0 6px rgba(8,13,24,.9), 0 0 34px -6px var(--accent);
+    position:relative;z-index:2;
+  }
+  .dot::after{
+    content:'';position:absolute;inset:-9px;border-radius:50%;
+    border:1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    animation:ring 3.2s ease-out infinite;
+  }
+  @keyframes ring{0%{transform:scale(.85);opacity:.85}70%{transform:scale(1.28);opacity:0}100%{opacity:0}}
+
+  .dot-art{
+    width:44px;height:44px;display:grid;place-items:center;font-size:1.5rem;
+    transform:scale(0);transition:transform .7s cubic-bezier(.34,1.56,.64,1) .18s;
+  }
+  .item.visible .dot-art{transform:scale(1)}
+  .dot-art svg{animation:bob 3.8s ease-in-out infinite}
+
+  .card{
+    grid-column:1;background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:26px 26px 24px;backdrop-filter:blur(14px);position:relative;overflow:hidden;
+    transition:transform .4s cubic-bezier(.2,.7,.2,1), border-color .4s, box-shadow .4s;
+  }
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),transparent 85%)}
+  .item:nth-child(even) .card{grid-column:3}
+  .item:nth-child(odd) .card{margin-right:6px}
+  .item:nth-child(even) .card{margin-left:6px}
+  .card:hover{
+    transform:translateY(-6px);
+    border-color:color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow:0 26px 60px -26px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+  .card .year{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--accent);letter-spacing:.06em;display:block;margin-bottom:6px}
+  .card h2{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:800;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px;color:#fff}
+  .badge{
+    display:inline-block;font-size:.64rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    padding:5px 12px;border-radius:999px;margin-bottom:16px;color:var(--accent);
+    background:color-mix(in srgb, var(--accent) 16%, transparent);
+    border:1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  }
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .card li{font-size:.92rem;color:#cfdcee;padding-left:24px;position:relative;line-height:1.55}
+  .card li::before{
+    content:'';position:absolute;left:0;top:.55em;width:9px;height:9px;border-radius:50%;
+    background:var(--accent);opacity:.85;box-shadow:0 0 12px -1px var(--accent);
+  }
+  .card li strong{color:#fff;font-weight:700}
+
+  /* ---------- Cifras ---------- */
+  .stats{max-width:1120px;margin:20px auto 0;padding:90px 24px 40px;border-top:1px solid var(--line)}
+  .stats h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.6vw,2.7rem);font-weight:800;text-align:center;letter-spacing:-.02em;margin-bottom:12px}
+  .stats p.lead{text-align:center;color:var(--muted);max-width:56ch;margin:0 auto 50px;font-weight:300}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+  .stat{
+    background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    border:1px solid var(--line);border-radius:18px;padding:26px 22px;transition:.4s;position:relative;overflow:hidden;
+  }
+  .stat::after{content:'';position:absolute;bottom:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:var(--accent);filter:blur(48px);opacity:.32}
+  .stat:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--accent) 50%, transparent)}
+  .stat .num{display:block;font-family:'Fraunces',serif;font-size:2.15rem;font-weight:800;color:var(--accent);letter-spacing:-.02em;line-height:1.1;margin-bottom:8px}
+  .stat .label{font-size:.83rem;color:var(--muted);line-height:1.45}
+
+  /* ---------- Cierre ---------- */
+  .closing{max-width:820px;margin:0 auto;padding:90px 24px 60px;text-align:center}
+  .closing blockquote{
+    font-family:'Fraunces',serif;font-size:clamp(1.25rem,2.8vw,1.85rem);line-height:1.45;font-weight:600;letter-spacing:-.01em;
+    background:linear-gradient(110deg,#fff,#b9d4ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .closing cite{display:block;margin-top:26px;font-style:normal;font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- Mascotas finales ---------- */
+  .mascot-final{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:46px}
+  .mascot-mini{
+    opacity:0;transform:translateY(22px) scale(.75);
+    transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.34,1.56,.64,1);
+  }
+  .mascot-mini.visible{opacity:1;transform:none}
+  .mascot-mini .chip-art{width:58px;height:58px;padding:9px}
+
+  footer{text-align:center;padding:48px 24px 64px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;line-height:1.9}
+  footer strong{color:#dfe9f7;font-weight:600}
+
+  /* ---------- Animaciones de mascotas ---------- */
+  [data-mascot] svg{display:block;width:100%;height:100%}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-5px) rotate(-2.5deg)}}
+
+  .eye{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
+  @keyframes blink{0%,92%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.08)}}
+  .m-cacao .eye{animation-delay:.4s}
+  .m-banano .eye{animation-delay:1.2s}
+  .m-petroleo .eye{animation-delay:2s}
+  .m-crisis .eye{animation-delay:.9s}
+  .m-dolar .eye{animation-delay:1.7s}
+
+  .sweat{transform-box:fill-box;transform-origin:center;animation:sweatDrop 3s ease-in infinite}
+  @keyframes sweatDrop{
+    0%{opacity:0;transform:translateY(-6px) scale(.5)}
+    20%{opacity:1;transform:translateY(0) scale(.9)}
+    60%{opacity:1;transform:translateY(8px) scale(1)}
+    85%,100%{opacity:0;transform:translateY(16px) scale(.7)}
+  }
+
+  .pulse{transform-box:fill-box;transform-origin:center;animation:antennaPulse 2.2s ease-in-out infinite}
+  @keyframes antennaPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.55}}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .timeline{padding:70px 18px 20px}
+    .timeline::before{left:31px;transform:none}
+    .item{grid-template-columns:64px 1fr;margin-bottom:44px;gap:14px}
+    .dot{grid-column:1;width:54px;height:54px;margin-top:2px}
+    .dot-art{width:36px;height:36px}
+    .card,.item:nth-child(even) .card{grid-column:2;margin-left:0;margin-right:0}
+    .item:nth-child(odd) .card{margin-right:0}
+    .card{padding:22px 20px}
+    .card h2{font-size:1.3rem}
+    .chip-art{width:64px;height:64px;padding:10px}
+    .mascot-strip{gap:16px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .item{opacity:1;transform:none}
+    .mascot-chip,.mascot-mini{opacity:1;transform:none}
+    .dot-art{transform:scale(1)}
+  }
+</style>
+</head>
+<body>
+
+<!-- Gradientes compartidos por todas las mascotas -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <linearGradient id="cacaoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0a869"/><stop offset=".55" stop-color="#c07a3a"/><stop offset="1" stop-color="#7a4a1f"/>
+    </linearGradient>
+    <linearGradient id="banGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe680"/><stop offset=".5" stop-color="#f5c518"/><stop offset="1" stop-color="#d99a06"/>
+    </linearGradient>
+    <linearGradient id="oilGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a5a70"/><stop offset=".5" stop-color="#1c2634"/><stop offset="1" stop-color="#0a0f16"/>
+    </linearGradient>
+    <linearGradient id="crisisGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8a6a"/><stop offset="1" stop-color="#b8301f"/>
+    </linearGradient>
+    <linearGradient id="dolarGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6ee7a8"/><stop offset="1" stop-color="#1f9a5c"/>
+    </linearGradient>
+    <linearGradient id="digitalGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fa8ff"/><stop offset="1" stop-color="#4a5fd6"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div id="progress"></div>
+<div class="orbs"><span></span><span></span><span></span><span></span></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="kicker">Universidad Estatal de Milagro · Arte y Apreciación de la Cultura</div>
+  <h1>Ecuador: economía, sociedad y cultura a través del tiempo</h1>
+  <p class="sub">Del cacao a la economía digital. Siete momentos en los que la prosperidad y la crisis reescribieron cómo vivimos, trabajamos, migramos y nos expresamos.</p>
+
+  <div class="mascot-strip">
+    <div class="mascot-chip" style="--accent:var(--cacao);animation-delay:.10s">
+      <div class="chip-art" data-mascot="cacao">🍫</div><span>Cacao</span>
+    </div>
+    <div class="mascot-chip" style="--accent:var(--banano);animation-delay:.22s">
+      <div class="chip-art" data-mascot="banano">🍌</div><span>Banano</span>
+    </div>
+    <div class="mascot-chip" style="--accent:var(--petroleo);animation-delay:.34s">
+      <div class="chip-art" data-mascot="petroleo">🛢️</div><span>Petróleo</span>
+    </div>
+    <div class="mascot-chip" style="--accent:var(--crisis99);animation-delay:.46s">
+      <div class="chip-art" data-mascot="crisis">💸</div><span>Crisis</span>
+    </div>
+    <div class="mascot-chip" style="--accent:var(--dolar);animation-delay:.58s">
+      <div class="chip-art" data-mascot="dolar">💵</div><span>Dolarización</span>
+    </div>
+    <div class="mascot-chip" style="--accent:var(--digital);animation-delay:.70s">
+      <div class="chip-art" data-mascot="digital">🤖</div><span>Economía digital</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Desliza</div>
+</header>
+
+<!-- ============ NAV ============ -->
+<nav class="chips">
+  <a href="#e1">1860 · Cacao</a>
+  <a href="#e2">1948 · Banano</a>
+  <a href="#e3">1972 · Petróleo</a>
+  <a href="#e4">1982 · Deuda</a>
+  <a href="#e5">1998 · Feriado bancario</a>
+  <a href="#e6">2000 · Dolarización</a>
+  <a href="#e7">Siglo XXI · Digital</a>
+  <a href="#cifras">Cifras</a>
+</nav>
+
+<!-- ============ TIMELINE ============ -->
+<main class="timeline">
+
+  <article class="item" id="e1" style="--accent:var(--cacao)">
+    <div class="dot"><div class="dot-art" data-mascot="cacao">🍫</div></div>
+    <div class="card">
+      <span class="year">1860 — 1920</span>
+      <h2>Auge cacaotero</h2>
+      <span class="badge">Auge</span>
+      <ul>
+        <li><strong>Economía:</strong> el cacao se producía en la Costa y salía por el puerto de Guayaquil; se fortaleció un grupo de agroexportadores, comerciantes y banqueros guayaquileños (Larrea, 1987).</li>
+        <li><strong>Sociedad:</strong> élite agroexportadora y bancaria frente a jornaleros que trabajaban en las haciendas costeñas.</li>
+        <li><strong>Cultura:</strong> ciudad portuaria cosmopolita; el cacao se instala como símbolo nacional.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="item" id="e2" style="--accent:var(--banano)">
+    <div class="dot"><div class="dot-art" data-mascot="banano">🍌</div></div>
+    <div class="card">
+      <span class="year">1948 — 1965</span>
+      <h2>Auge bananero</h2>
+      <span class="badge">Auge</span>
+      <ul>
+        <li><strong>Economía:</strong> Ecuador llegó a ser el primer exportador mundial de banano. El PIB real creció 5,6 % anual (1948–1954) y 4,8 % (1954–1965) (Larrea, 1987).</li>
+        <li><strong>Sociedad:</strong> empleo agrícola y portuario en El Oro, Guayas y Los Ríos; migración interna Sierra–Costa.</li>
+        <li><strong>Cultura:</strong> crecimiento de ciudades costeñas intermedias y mezcla de costumbres regionales.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="item" id="e3" style="--accent:var(--petroleo)">
+    <div class="dot"><div class="dot-art" data-mascot="petroleo">🛢️</div></div>
+    <div class="card">
+      <span class="year">1972 — 1980</span>
+      <h2>Auge petrolero</h2>
+      <span class="badge">Auge</span>
+      <ul>
+        <li><strong>Economía:</strong> las exportaciones de crudo comenzaron en agosto de 1972; el Estado amplió ingresos, obra pública y empleo. La deuda pasó de 16 % a 42 % del PIB (1971–1981).</li>
+        <li><strong>Sociedad:</strong> más empleo público, clase media urbana y acceso a crédito.</li>
+        <li><strong>Cultura:</strong> consumo moderno, universidades y medios masivos en las ciudades.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="item" id="e4" style="--accent:var(--crisis80)">
+    <div class="dot"><div class="dot-art" data-mascot="crisis">📉</div></div>
+    <div class="card">
+      <span class="year">1982 — 1990</span>
+      <h2>Endeudamiento y ajuste</h2>
+      <span class="badge">Crisis</span>
+      <ul>
+        <li><strong>Economía:</strong> país endeudado y dependiente del precio del crudo; en 1987 un sismo dañó el oleoducto y suspendió las exportaciones.</li>
+        <li><strong>Sociedad:</strong> alza del costo de vida y precariedad laboral.</li>
+        <li><strong>Cultura:</strong> la economía informal crece como estrategia de supervivencia familiar.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="item" id="e5" style="--accent:var(--crisis99)">
+    <div class="dot"><div class="dot-art" data-mascot="crisis">💸</div></div>
+    <div class="card">
+      <span class="year">1998 — 2000</span>
+      <h2>Crisis financiera y feriado bancario</h2>
+      <span class="badge">Crisis</span>
+      <ul>
+        <li><strong>Economía:</strong> quiebra de bancos y feriado bancario decretado el 8 de marzo de 1999; inflación de 60,7 % en diciembre de 1999 y cercana a 96 % en 2000.</li>
+        <li><strong>Sociedad:</strong> 44,8 % de las familias vivía en pobreza a fines de la década; desempleo y pérdida de ahorros.</li>
+        <li><strong>Cultura:</strong> primera gran ola migratoria hacia España, EE. UU. e Italia; 175 922 personas de saldo migratorio negativo en 2000.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="item" id="e6" style="--accent:var(--dolar)">
+    <div class="dot"><div class="dot-art" data-mascot="dolar">💵</div></div>
+    <div class="card">
+      <span class="year">2000</span>
+      <h2>Dolarización</h2>
+      <span class="badge">Transformación</span>
+      <ul>
+        <li><strong>Economía:</strong> Ecuador adopta el dólar tras la pérdida de confianza en el sucre; la inflación bajó y el PIB creció 2,3 % en 2000.</li>
+        <li><strong>Sociedad:</strong> estabilidad de precios y menor incertidumbre cambiaria, con pérdida inicial de poder adquisitivo.</li>
+        <li><strong>Cultura:</strong> nueva forma de pagar y de ahorrar; las remesas llegan en dólares.</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="item" id="e7" style="--accent:var(--digital)">
+    <div class="dot"><div class="dot-art" data-mascot="digital">🤖</div></div>
+    <div class="card">
+      <span class="year">Siglo XXI</span>
+      <h2>Economía digital y global</h2>
+      <span class="badge">Transformación</span>
+      <ul>
+        <li><strong>Economía:</strong> camarón USD 8 401 M, crudo 6 985 M, banano 4 262 M y cacao 4 183 M; remesas por USD 7 729 M, casi 6 % del PIB (Primicias, 2026).</li>
+        <li><strong>Sociedad:</strong> familias transnacionales, emprendimiento y trabajo digital.</li>
+        <li><strong>Cultura:</strong> identidad ecuatoriana en la diáspora y cultura digital.</li>
+      </ul>
+    </div>
+  </article>
+
+</main>
+
+<!-- ============ CIFRAS ============ -->
+<section class="stats" id="cifras">
+  <h2>Cifras que cuentan la historia</h2>
+  <p class="lead">Cada número de esta línea de tiempo es, en realidad, una familia, un trabajo o una decisión que cambió la vida cotidiana.</p>
+  <div class="stats-grid">
+    <div class="stat" style="--accent:var(--banano)">
+      <span class="num" data-value="5.6" data-decimals="1" data-suffix=" %">0</span>
+      <span class="label">Crecimiento anual del PIB real durante el auge bananero (1948–1954)</span>
+    </div>
+    <div class="stat" style="--accent:var(--petroleo)">
+      <span class="num" data-value="42" data-suffix=" %">0</span>
+      <span class="label">Deuda externa como porcentaje del PIB en 1981</span>
+    </div>
+    <div class="stat" style="--accent:var(--crisis99)">
+      <span class="num" data-value="60.7" data-decimals="1" data-suffix=" %">0</span>
+      <span class="label">Inflación anual en diciembre de 1999</span>
+    </div>
+    <div class="stat" style="--accent:var(--crisis80)">
+      <span class="num" data-value="175922">0</span>
+      <span class="label">Personas de saldo migratorio negativo en el año 2000</span>
+    </div>
+    <div class="stat" style="--accent:var(--dolar)">
+      <span class="num" data-value="7729" data-prefix="USD " data-suffix=" M">0</span>
+      <span class="label">Remesas recibidas en 2025, casi 6 % del PIB</span>
+    </div>
+    <div class="stat" style="--accent:var(--cacao)">
+      <span class="num" data-value="8401" data-prefix="USD " data-suffix=" M">0</span>
+      <span class="label">Exportaciones de camarón en 2025, el primer rubro del país</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CIERRE ============ -->
+<section class="closing">
+  <blockquote>«La economía ecuatoriana no se reduce al dinero: es una forma de organizar el trabajo, las ciudades, las familias y las costumbres.»</blockquote>
+  <cite>Conclusión del informe</cite>
+
+  <div class="mascot-final">
+    <div class="mascot-mini" style="--accent:var(--cacao);transition-delay:.05s"><div class="chip-art" data-mascot="cacao">🍫</div></div>
+    <div class="mascot-mini" style="--accent:var(--banano);transition-delay:.13s"><div class="chip-art" data-mascot="banano">🍌</div></div>
+    <div class="mascot-mini" style="--accent:var(--petroleo);transition-delay:.21s"><div class="chip-art" data-mascot="petroleo">🛢️</div></div>
+    <div class="mascot-mini" style="--accent:var(--crisis99);transition-delay:.29s"><div class="chip-art" data-mascot="crisis">💸</div></div>
+    <div class="mascot-mini" style="--accent:var(--dolar);transition-delay:.37s"><div class="chip-art" data-mascot="dolar">💵</div></div>
+    <div class="mascot-mini" style="--accent:var(--digital);transition-delay:.45s"><div class="chip-art" data-mascot="digital">🤖</div></div>
+  </div>
+</section>
+
+<footer>
+  <strong>Economía, historia y cultura del Ecuador: épocas de auge, crisis y transformación</strong><br>
+  Roberto Antonio Ayala Gómez · Jean Pierre Benitez Ramirez · Deisy Lizbeth Ilves Buñay · Jorge Isaac Mayorga Cabrera<br>
+  Universidad Estatal de Milagro — Facultad de Ciencias e Ingeniería — Tecnologías de la Información<br>
+  Asignatura: Arte y Apreciación de la Cultura · Milagro, Ecuador
+</footer>
+
+<script>
+/* ================= MASCOTAS SVG ================= */
+const MASCOTS = {
+  cacao: `<svg class="m-cacao" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M52 19 Q50 9 58 5" stroke="#4f7a35" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="67" cy="8" rx="10" ry="4.5" fill="#6ba84f" transform="rotate(-28 67 8)"/>
+    <path d="M50 20 C72 20 82 42 79 62 C76 83 63 94 50 94 C37 94 24 83 21 62 C18 42 28 20 50 20Z"
+          fill="url(#cacaoGrad)" stroke="#6e421b" stroke-width="1.8"/>
+    <path d="M37 27 Q32 58 39 88" stroke="#6e421b" stroke-width="2.2" fill="none" opacity=".5"/>
+    <path d="M63 27 Q68 58 61 88" stroke="#6e421b" stroke-width="2.2" fill="none" opacity=".5"/>
+    <path d="M50 25 L50 92" stroke="#6e421b" stroke-width="1.6" fill="none" opacity=".35"/>
+    <g class="eye"><ellipse cx="41" cy="53" rx="4.6" ry="5.2" fill="#2a1a0e"/><circle cx="42.6" cy="51" r="1.6" fill="#fff"/></g>
+    <g class="eye"><ellipse cx="59" cy="53" rx="4.6" ry="5.2" fill="#2a1a0e"/><circle cx="60.6" cy="51" r="1.6" fill="#fff"/></g>
+    <path d="M44 66 Q50 71 56 66" stroke="#2a1a0e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse cx="32" cy="61" rx="4" ry="2.6" fill="#ff8a6a" opacity=".45"/>
+    <ellipse cx="68" cy="61" rx="4" ry="2.6" fill="#ff8a6a" opacity=".45"/>
+  </svg>`,
+
+  banano: `<svg class="m-banano" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M22 34 Q50 98 78 34" stroke="url(#banGrad)" stroke-width="24" stroke-linecap="round" fill="none"/>
+    <circle cx="22" cy="34" r="12" fill="#8a6a1a"/>
+    <circle cx="78" cy="34" r="12" fill="#8a6a1a"/>
+    <g class="eye"><ellipse cx="42" cy="61" rx="4.6" ry="5.2" fill="#3a2a05"/><circle cx="43.4" cy="59" r="1.6" fill="#fff"/></g>
+    <g class="eye"><ellipse cx="58" cy="61" rx="4.6" ry="5.2" fill="#3a2a05"/><circle cx="59.4" cy="59" r="1.6" fill="#fff"/></g>
+    <path d="M44 71 Q50 76 56 71" stroke="#3a2a05" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </svg>`,
+
+  petroleo: `<svg class="m-petroleo" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M50 8 C50 8 78 44 78 63 A28 28 0 0 1 22 63 C22 44 50 8 50 8Z"
+          fill="url(#oilGrad)" stroke="#0a0f16" stroke-width="1.5"/>
+    <ellipse cx="40" cy="40" rx="6" ry="9" fill="#8fa6c4" opacity=".25" transform="rotate(-25 40 40)"/>
+    <path d="M34 48 C29 54 29 61 31 67" stroke="#8fa6c4" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".4"/>
+    <g class="eye"><ellipse cx="42" cy="64" rx="4.8" ry="5.4" fill="#fff"/><circle cx="43.2" cy="65.4" r="2.3" fill="#0a0f16"/></g>
+    <g class="eye"><ellipse cx="58" cy="64" rx="4.8" ry="5.4" fill="#fff"/><circle cx="59.2" cy="65.4" r="2.3" fill="#0a0f16"/></g>
+    <path d="M44 75 Q50 80 56 75" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </svg>`,
+
+  crisis: `<svg class="m-crisis" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="52" r="38" fill="url(#crisisGrad)" stroke="#8a2015" stroke-width="2"/>
+    <path d="M28 22 L34 32 L24 36 L30 42" stroke="#8a2015" stroke-width="3" fill="none"
+          stroke-linejoin="round" stroke-linecap="round" opacity=".8"/>
+    <g class="eye"><ellipse cx="40" cy="50" rx="5" ry="5.6" fill="#2a0a05"/><circle cx="41.6" cy="48" r="1.7" fill="#fff"/></g>
+    <g class="eye"><ellipse cx="60" cy="50" rx="5" ry="5.6" fill="#2a0a05"/><circle cx="61.6" cy="48" r="1.7" fill="#fff"/></g>
+    <path d="M33 45 L45 41" stroke="#2a0a05" stroke-width="3" stroke-linecap="round"/>
+    <path d="M67 45 L55 41" stroke="#2a0a05" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="50" cy="68" rx="6" ry="5" fill="#2a0a05"/>
+    <path class="sweat" d="M72 30 C72 30 78 38 78 42 A6 6 0 0 1 66 42 C66 38 72 30 72 30Z" fill="#7fc8ff" opacity=".9"/>
+  </svg>`,
+
+  dolar: `<svg class="m-dolar" viewBox="0 0 100 100" aria-hidden="true">
+    <rect x="12" y="28" width="76" height="48" rx="9" fill="url(#dolarGrad)" stroke="#0d5c36" stroke-width="2"/>
+    <rect x="19" y="35" width="62" height="34" rx="6" fill="none" stroke="#0d5c36" stroke-width="1.6" opacity=".45"/>
+    <text x="25" y="47" font-family="Inter,sans-serif" font-size="11" font-weight="800" fill="#0d5c36" opacity=".55">$</text>
+    <text x="68" y="47" font-family="Inter,sans-serif" font-size="11" font-weight="800" fill="#0d5c36" opacity=".55">$</text>
+    <g class="eye"><ellipse cx="41" cy="53" rx="4.6" ry="5.2" fill="#04351f"/><circle cx="42.5" cy="51" r="1.6" fill="#fff"/></g>
+    <g class="eye"><ellipse cx="59" cy="53" rx="4.6" ry="5.2" fill="#04351f"/><circle cx="60.5" cy="51" r="1.6" fill="#fff"/></g>
+    <path d="M44 63 Q50 68 56 63" stroke="#04351f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </svg>`,
+
+  digital: `<svg class="m-digital" viewBox="0 0 100 100" aria-hidden="true">
+    <line x1="50" y1="13" x2="50" y2="27" stroke="#8fa8ff" stroke-width="4.5" stroke-linecap="round"/>
+    <circle class="pulse" cx="50" cy="10" r="5.5" fill="#8fa8ff"/>
+    <rect x="6" y="48" width="11" height="22" rx="5" fill="#5a6fd6"/>
+    <rect x="83" y="48" width="11" height="22" rx="5" fill="#5a6fd6"/>
+    <rect x="16" y="26" width="68" height="60" rx="17" fill="url(#digitalGrad)" stroke="#2a3a8a" stroke-width="2"/>
+    <rect x="25" y="37" width="50" height="38" rx="9" fill="#0e1730"/>
+    <path d="M35 52 Q39 47 43 52" stroke="#7df9ff" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+    <path d="M57 52 Q61 47 65 52" stroke="#7df9ff" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+    <path d="M41 63 Q50 70 59 63" stroke="#7df9ff" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+  </svg>`
+};
+
+document.querySelectorAll('[data-mascot]').forEach(el => {
+  const key = el.getAttribute('data-mascot');
+  if (MASCOTS[key]) el.innerHTML = MASCOTS[key];
+});
+
+/* ================= BARRA DE PROGRESO ================= */
+const bar = document.getElementById('progress');
+function updateProgress(){
+  const h = document.documentElement;
+  const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+  bar.style.width = Math.min(pct, 100) + '%';
+}
+document.addEventListener('scroll', updateProgress, {passive:true});
+updateProgress();
+
+/* ================= APARICIÓN DE TARJETAS Y MASCOTAS ================= */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if(entry.isIntersecting){
+      setTimeout(() => entry.target.classList.add('visible'), i * 90);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.16, rootMargin:'0px 0px -60px 0px'});
+
+document.querySelectorAll('.item, .mascot-mini').forEach(el => revealObserver.observe(el));
+
+/* ================= CONTADORES ANIMADOS ================= */
+function animateCounter(el){
+  const target   = parseFloat(el.dataset.value);
+  const decimals = parseInt(el.dataset.decimals || 0, 10);
+  const prefix   = el.dataset.prefix || '';
+  const suffix   = el.dataset.suffix || '';
+  const duration = 1700;
+  const start    = performance.now();
+
+  function tick(now){
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const value = target * eased;
+    el.textContent = prefix + value.toLocaleString('es-EC', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }) + suffix;
+    if(p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.5});
+
+document.querySelectorAll('.num').forEach(el => counterObserver.observe(el));
+</script>
+
+</body>
+</html>
